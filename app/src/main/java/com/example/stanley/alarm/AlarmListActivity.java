@@ -48,8 +48,7 @@ public class AlarmListActivity extends AppCompatActivity {
     private Context thisContext;
     private MySimpleAdapter simpleAdapter;
     private ArrayList<HashMap<String,Integer>> list = new ArrayList<HashMap<String, Integer>>();
-    private int testing_variable = 111;
-    private int sHour = 12, sMinute = 0, eHour = 12, eMinute = 0;
+    private int sHour = 12, sMinute = 0, eHour = 12, eMinute = 0, weekDay = 0;
     AlarmManager alarmManager = null;
     private PendingIntent[] pendingIntent = new PendingIntent[MAX_CLOCKS];
     private String preferenceName = "alarmList";
@@ -63,26 +62,8 @@ public class AlarmListActivity extends AppCompatActivity {
 
         listView = (ListView) this.findViewById(R.id.listView);
 
-//        Calendar cal = Calendar.getInstance();
-  //      cal.set(Calendar.YEAR, 2015);
-    //    cal.set(Calendar.MONTH, Calendar.NOVEMBER);
-      //  cal.set(Calendar.DAY_OF_MONTH, 1);
-    //    cal.set(Calendar.HOUR_OF_DAY, 22);
-  //      cal.set(Calendar.MINUTE, 47);
-//        cal.set(Calendar.SECOND, 0);
-
-    //    Intent intent = new Intent(AlarmListActivity.this, AlarmReceiver.class);
         alarmManager = (AlarmManager) AlarmListActivity.this.getSystemService(Context.ALARM_SERVICE);
-  //      PendingIntent pi = PendingIntent.getBroadcast(AlarmListActivity.this, 1, intent, 0);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-/*        current_total_items = 4;
 
-        for (int i = 0; i < current_total_items; i++) {
-            HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
-            hashMap.put(12, 00);
-            list.add(hashMap);
-        }
-*/
         for(int i=0; i < MAX_CLOCKS; i++) {
             alarms.add(new Alarm());
         }
@@ -161,7 +142,6 @@ public class AlarmListActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     // do something, the isChecked will be
                     // true if the switch is in the On position
-                    Toast.makeText(thisContext, "Switch " + current_total_items, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -176,11 +156,9 @@ public class AlarmListActivity extends AppCompatActivity {
         intent.putExtra("startMinute", sMinute);
         intent.putExtra("endHour", eHour);
         intent.putExtra("endMinute", eMinute);
-
+        intent.putExtra("weekDay", weekDay);
         Calendar ca = Calendar.getInstance();
-//        ca.set(Calendar.YEAR, 2015);
-  //      ca.set(Calendar.MONTH, Calendar.NOVEMBER);
-    //    ca.set(Calendar.DAY_OF_MONTH, 1);
+
         ca.set(Calendar.HOUR_OF_DAY, sHour);
         ca.set(Calendar.MINUTE, sMinute);
         ca.set(Calendar.SECOND, 0);
@@ -202,7 +180,6 @@ public class AlarmListActivity extends AppCompatActivity {
             current_total_items = bundleObject.getInt("update_current_total_items");
             current_alarm_index++;
             buildAlarm(alarm, current_alarm_index, intent);
-            Toast.makeText(thisContext, "" + current_total_items, Toast.LENGTH_SHORT).show();
             boolean b_add_clock = bundleObject.getBoolean("b_add_clock");
 
             if(b_add_clock)

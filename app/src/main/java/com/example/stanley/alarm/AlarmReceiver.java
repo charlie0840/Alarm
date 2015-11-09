@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 /**
  * Created by yshui on 11/1/15.
  */
@@ -23,15 +25,32 @@ public class AlarmReceiver extends BroadcastReceiver
     private Intent it = new Intent();
     private boolean bool = true;
     private MediaPlayer mplayer;
+    private int currHour = 0, currMin = 0, scheduleHour = 0, scheduleMin = 0;
     @Override
     public void onReceive(Context context, Intent intent) {
         //    SharedPreferences sharedPreferences = context.getSharedPreferences("alarmList", Activity.MODE_PRIVATE);
-        Intent pop = new Intent(context, PopAlarm.class);
-        context.startActivity(pop);
+        Calendar currentTime = Calendar.getInstance();
+        currHour = currentTime.get(Calendar.HOUR_OF_DAY);
+        currMin = currentTime.get(Calendar.MINUTE);
+        scheduleHour = intent.getIntExtra("startHour", 0);
+        scheduleMin = intent.getIntExtra("startMinute", 0);
+        if(scheduleHour < currHour)
+        {
+          //  Toast.makeText(context, "curr is"+currHour+"schedule is"+scheduleHour, Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(scheduleHour == currHour && scheduleMin < currMin)
+        {
+            //Toast.makeText(context, "curr is"+currMin+"schedule is"+scheduleMin, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //Intent pop = new Intent(context, PopAlarm.class);
+        //context.startActivity(pop);
 
     //    bool = intent.getBooleanExtra("alarmBool", true);
     //    if (bool == true) {
-    //        Toast.makeText(context, "time's up", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "time's up", Toast.LENGTH_LONG).show();
 
     //        Environment.getExternalStorageDirectory();
   //          mplayer = new MediaPlayer();
@@ -46,11 +65,11 @@ public class AlarmReceiver extends BroadcastReceiver
     //        cancel.setOnClickListener(new ButtonListener());
       //      conform.setOnClickListener(new ButtonListener());
 
-        }
-
-
-
     }
+
+
+
+}
 //    private class ButtonListener implements View.OnClickListener{
   //      public void onClick(View v){
     //        switch (v.getId()){
