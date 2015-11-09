@@ -1,18 +1,12 @@
 package com.example.stanley.alarm;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.provider.Contacts;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,40 +14,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.Inflater;
 
 public class AlarmListActivity extends AppCompatActivity {
 
     private final int MAX_CLOCKS = 10;
     private int current_total_items = 2;
     private int current_alarm_index;
+    private int sHour = 12, sMinute = 0, eHour = 12, eMinute = 0, weekDay = 0;
+
     private Alarm [] alarm = new Alarm[MAX_CLOCKS];
     private ArrayList<Alarm> alarms = new ArrayList<Alarm>(MAX_CLOCKS);
+    private ArrayList<HashMap<String,Integer>> list = new ArrayList<HashMap<String, Integer>>();
+
     private ListView listView;
     private Context thisContext;
     private MySimpleAdapter simpleAdapter;
-    private ArrayList<HashMap<String,Integer>> list = new ArrayList<HashMap<String, Integer>>();
-    private int sHour = 12, sMinute = 0, eHour = 12, eMinute = 0, weekDay = 0;
+
+
     AlarmManager alarmManager = null;
     private PendingIntent[] pendingIntent = new PendingIntent[MAX_CLOCKS];
-    private String preferenceName = "alarmList";
     private PopupWindow popWindow;
 //    private Intent[] alarmSet = new Intent[MAX_CLOCKS];
+
+    private ImageButton btn_add_clock, btn_delete_clock;
+    private Button btn_conform_delete;
+
+    private boolean b_show_delete_checkbox;
+    private boolean [] b_enable_clock = new boolean[MAX_CLOCKS];
+    private boolean [] b_delete_list = new boolean[MAX_CLOCKS];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
