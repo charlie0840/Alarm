@@ -47,7 +47,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
         current_total_items = bundleObject.getInt("current_total_items");
         current_alarm_index = bundleObject.getInt("current_alarm_index");
         alarms = (ArrayList<Alarm>) bundleObject.getSerializable("alarm_array");
-        Intent totalSet = new Intent(AlarmSettingActivity.this, AlarmListActivity.class);
+//        Intent totalSet = new Intent(AlarmSettingActivity.this, AlarmListActivity.class);
 
         confirmButton = (Button) findViewById(R.id.alarm_setting_confirm_button);
         cancelButton = (Button) findViewById(R.id.alarm_setting_cancel_button);
