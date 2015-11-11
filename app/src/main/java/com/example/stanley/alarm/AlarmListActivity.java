@@ -64,10 +64,19 @@ public class AlarmListActivity extends AppCompatActivity {
 
         thisContext = this;
 
+<<<<<<< HEAD
 
 
         alarmManager = (AlarmManager) AlarmListActivity.this.getSystemService(Context.ALARM_SERVICE);
 
+=======
+        alarmManager = (AlarmManager) AlarmListActivity.this.getSystemService(Context.ALARM_SERVICE);
+
+//        for(int i=0; i < MAX_CLOCKS; i++) {
+  //          alarms.add(new Alarm());
+    //    }
+
+>>>>>>> 7715bb6ada20f42626697b71e63ba11ea0f871ce
         simpleAdapter = new MySimpleAdapter(this, list_for_ListView);
         listView.setAdapter(simpleAdapter);
 
@@ -189,7 +198,11 @@ public class AlarmListActivity extends AppCompatActivity {
             if (convertView == null)
             {
                 convertView = inflater.inflate(R.layout.simple_adapter, null);
+<<<<<<< HEAD
           //      convertView.setTag("time" + position + "  ");
+=======
+     //           convertView.setTag("time" + position + "  ");
+>>>>>>> 7715bb6ada20f42626697b71e63ba11ea0f871ce
             }
             final View switch_convertView = convertView;
 
@@ -311,7 +324,7 @@ public class AlarmListActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+/*
     // Rightmost screen button handler
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
