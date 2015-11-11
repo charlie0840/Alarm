@@ -29,6 +29,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
     private ArrayList<Alarm> alarms;
     private Context thisContext;
+    private Bundle objectBundle = new Bundle();
 
     private boolean b_add_clock = true;
     private boolean changeTime = false, startChanged = false, endChanged = false;
@@ -47,7 +48,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
         current_total_items = bundleObject.getInt("current_total_items");
         current_alarm_index = bundleObject.getInt("current_alarm_index");
         alarms = (ArrayList<Alarm>) bundleObject.getSerializable("alarm_array");
-        Intent totalSet = new Intent(AlarmSettingActivity.this, AlarmListActivity.class);
+//        Intent totalSet = new Intent(AlarmSettingActivity.this, AlarmListActivity.class);
 
         confirmButton = (Button) findViewById(R.id.alarm_setting_confirm_button);
         cancelButton = (Button) findViewById(R.id.alarm_setting_cancel_button);
@@ -158,14 +159,25 @@ public class AlarmSettingActivity extends AppCompatActivity {
       //              alarmSet.putInt("weekday", weekday);
       //              alarmSet.putInt("others", others);
       //              alarmListIntent.putExtra("alarmSet",alarmSet);
+
+                    alarmListIntent.putExtras(objectBundle);
                     alarmListIntent.putExtra("week",weekday);
                     alarmListIntent.putExtra("others",others);
                     if(b_add_clock)
                     {
+                        requestCode = 1;
                         current_total_items++;
-                        alarmListIntent.putExtra("b_add_clock", true);
+                        objectBundle.putBoolean("b_add_clock", true);
+                        objectBundle.putInt("update_current_total_items", current_total_items);
+                        objectBundle.putInt("current_alarm_index", current_alarm_index);
+   //                     alarmListIntent.putExtra("b_add_clock", true);
+
+     //                   alarmListIntent.putExtra("update_current_total_items", current_total_items);
                     }
-                    alarmListIntent.putExtra("update_current_total_items", current_total_items);
+                    else
+                    {
+                        requestCode = 2;
+                    }
                     AlarmSettingActivity.this.setResult(1, alarmListIntent);
                     AlarmSettingActivity.this.finish();
                     break;
